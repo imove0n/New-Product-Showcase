@@ -233,7 +233,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h2>New Product</h2>
+      <h2>📄 New Product PDF Viewer</h2>
     </div>
     
     <div class="pdf-container">
@@ -245,9 +245,12 @@
     </div>
     
     <div class="actions">
-      <a href="NewProduct.pdf" target="_blank" class="download-btn">
-        Open in New Tab
-      </a>
+      <button onclick="printPDF()" class="download-btn">
+        🖨️ Print PDF
+      </button>
+      <button onclick="fullscreenPDF()" class="download-btn" style="margin-left: 10px;">
+        🔍 Fullscreen View
+      </button>
     </div>
   </div>
 
@@ -289,6 +292,29 @@
       const container = pdfEmbed.parentElement;
       const containerWidth = container.offsetWidth - 60; // Account for padding
       pdfEmbed.style.width = containerWidth + 'px';
+    }
+
+    // Print PDF function
+    function printPDF() {
+      const pdfEmbed = document.getElementById('pdfEmbed');
+      if (pdfEmbed.contentWindow) {
+        pdfEmbed.contentWindow.print();
+      } else {
+        // Fallback: try to print the whole page
+        window.print();
+      }
+    }
+
+    // Fullscreen PDF function
+    function fullscreenPDF() {
+      const pdfEmbed = document.getElementById('pdfEmbed');
+      if (pdfEmbed.requestFullscreen) {
+        pdfEmbed.requestFullscreen();
+      } else if (pdfEmbed.webkitRequestFullscreen) {
+        pdfEmbed.webkitRequestFullscreen();
+      } else if (pdfEmbed.msRequestFullscreen) {
+        pdfEmbed.msRequestFullscreen();
+      }
     }
 
     // Resize on window resize
