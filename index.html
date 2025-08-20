@@ -13,7 +13,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0c0a09 100%);
       min-height: 100vh;
       padding: 20px;
       position: relative;
@@ -29,44 +29,97 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.4) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+        radial-gradient(circle at 40% 40%, rgba(12, 10, 9, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 60% 60%, rgba(14, 165, 233, 0.2) 0%, transparent 60%);
       z-index: -1;
-      animation: backgroundFloat 20s ease-in-out infinite;
+      animation: backgroundFloat 25s ease-in-out infinite;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(45deg, transparent 40%, rgba(14, 165, 233, 0.1) 50%, transparent 60%),
+        linear-gradient(-45deg, transparent 40%, rgba(12, 10, 9, 0.1) 50%, transparent 60%);
+      z-index: -1;
+      animation: backgroundShift 30s ease-in-out infinite reverse;
     }
 
     @keyframes backgroundFloat {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+        opacity: 0.8;
+      }
+      33% { 
+        transform: translateY(-30px) rotate(120deg) scale(1.1); 
+        opacity: 1;
+      }
+      66% { 
+        transform: translateY(-10px) rotate(240deg) scale(0.9); 
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: translateX(0px) translateY(0px); }
+      25% { transform: translateX(20px) translateY(-10px); }
+      50% { transform: translateX(-15px) translateY(15px); }
+      75% { transform: translateX(10px) translateY(-20px); }
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
       background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      box-shadow: 
+        0 25px 80px rgba(14, 165, 233, 0.2),
+        0 10px 30px rgba(12, 10, 9, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(14, 165, 233, 0.2);
       overflow: hidden;
-      animation: slideIn 0.8s ease-out;
+      animation: slideIn 1s ease-out;
+      position: relative;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0ea5e9, #0284c7, #0c0a09, #0ea5e9);
+      background-size: 200% 100%;
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(50px) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
     .header {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      padding: 30px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0c0a09 100%);
+      padding: 40px;
       text-align: center;
       color: white;
       position: relative;
@@ -80,8 +133,19 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shimmer 3s infinite;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: underlineGlow 2s ease-in-out infinite alternate;
     }
 
     @keyframes shimmer {
@@ -89,54 +153,96 @@
       100% { left: 100%; }
     }
 
+    @keyframes underlineGlow {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
     .header h2 {
-      font-size: 2.5em;
+      font-size: 3em;
       font-weight: 300;
       margin: 0;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(14, 165, 233, 0.5);
       position: relative;
       z-index: 1;
+      letter-spacing: 2px;
     }
 
     .pdf-container {
-      padding: 30px;
-      background: #f8f9ff;
+      padding: 40px;
+      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+      position: relative;
+    }
+
+    .pdf-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at bottom right, rgba(12, 10, 9, 0.05) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     .pdf-embed {
       width: 100%;
       height: 80vh;
       border: none;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      box-shadow: 
+        0 15px 35px rgba(14, 165, 233, 0.15),
+        0 5px 15px rgba(12, 10, 9, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
       background: white;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      z-index: 1;
     }
 
     .pdf-embed:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 
+        0 25px 50px rgba(14, 165, 233, 0.25),
+        0 10px 25px rgba(12, 10, 9, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .actions {
-      padding: 20px 30px 30px;
+      padding: 30px 40px 40px;
       text-align: center;
-      background: #f8f9ff;
+      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .download-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0c0a09 100%);
       color: white;
       text-decoration: none;
-      padding: 15px 30px;
+      padding: 18px 35px;
       border-radius: 50px;
       font-weight: 600;
       font-size: 1.1em;
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-      transition: all 0.3s ease;
+      box-shadow: 
+        0 10px 30px rgba(14, 165, 233, 0.3),
+        0 3px 10px rgba(12, 10, 9, 0.2);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      min-width: 180px;
     }
 
     .download-btn::before {
@@ -146,54 +252,91 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .download-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s ease;
     }
 
     .download-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 15px 40px rgba(14, 165, 233, 0.4),
+        0 5px 15px rgba(12, 10, 9, 0.3);
     }
 
     .download-btn:hover::before {
       left: 100%;
     }
 
+    .download-btn:hover::after {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
     .download-btn:active {
-      transform: translateY(0);
+      transform: translateY(-1px) scale(1.02);
     }
 
     /* Responsive design */
     @media (max-width: 768px) {
       body {
-        padding: 10px;
+        padding: 15px;
+      }
+      
+      .header {
+        padding: 30px;
       }
       
       .header h2 {
-        font-size: 2em;
+        font-size: 2.2em;
       }
       
       .pdf-container {
-        padding: 20px;
+        padding: 25px;
       }
       
       .pdf-embed {
         height: 70vh;
       }
       
+      .actions {
+        padding: 25px;
+        flex-direction: column;
+        align-items: center;
+      }
+      
       .download-btn {
-        padding: 12px 25px;
+        padding: 15px 30px;
         font-size: 1em;
+        min-width: 160px;
       }
     }
 
     @media (max-width: 480px) {
       .header h2 {
-        font-size: 1.6em;
+        font-size: 1.8em;
+        letter-spacing: 1px;
       }
       
       .pdf-embed {
         height: 60vh;
+      }
+
+      .download-btn {
+        min-width: 140px;
       }
     }
 
@@ -203,19 +346,41 @@
       justify-content: center;
       align-items: center;
       height: 80vh;
-      background: white;
-      border-radius: 15px;
+      background: linear-gradient(145deg, #ffffff, #f1f5f9);
+      border-radius: 20px;
       flex-direction: column;
-      gap: 20px;
+      gap: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pdf-loading::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
+      animation: loadingPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes loadingPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
     }
 
     .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #667eea;
+      width: 60px;
+      height: 60px;
+      border: 5px solid #f1f5f9;
+      border-top: 5px solid #0ea5e9;
+      border-right: 5px solid #0284c7;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 1.2s linear infinite;
+      position: relative;
+      z-index: 1;
     }
 
     @keyframes spin {
@@ -224,16 +389,21 @@
     }
 
     .loading-text {
-      color: #666;
-      font-size: 1.1em;
-      font-weight: 500;
+      color: #0c0a09;
+      font-size: 1.2em;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 1px 3px rgba(14, 165, 233, 0.2);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h2>New Product PDF Viewer</h2>
+      <a href="#" onclick="window.open(window.location.href, '_blank'); return false;" style="text-decoration: none; color: inherit;">
+        <h2 style="cursor: pointer;">New Product Showcase</h2>
+      </a>
     </div>
     
     <div class="pdf-container">
@@ -248,7 +418,7 @@
       <button onclick="printPDF()" class="download-btn">
         Print PDF
       </button>
-      <button onclick="fullscreenPDF()" class="download-btn" style="margin-left: 10px;">
+      <button onclick="fullscreenPDF()" class="download-btn">
         Fullscreen View
       </button>
     </div>
@@ -264,8 +434,8 @@
       setTimeout(() => {
         loadingIndicator.style.display = 'none';
         pdfEmbed.style.display = 'block';
-        pdfEmbed.style.animation = 'slideIn 0.5s ease-out';
-      }, 1500);
+        pdfEmbed.style.animation = 'slideIn 0.6s ease-out';
+      }, 1800);
 
       // Handle PDF load event
       pdfEmbed.addEventListener('load', function() {
@@ -277,20 +447,20 @@
       setTimeout(() => {
         if (pdfEmbed.style.display === 'none') {
           loadingIndicator.innerHTML = `
-            <div style="text-align: center; color: #666;">
-              <h3>PDF Preview Not Available</h3>
-              <p>Click the button below to open the PDF</p>
+            <div style="text-align: center; color: #0c0a09; z-index: 2; position: relative;">
+              <h3 style="margin-bottom: 10px; color: #0ea5e9;">PDF Preview Not Available</h3>
+              <p style="color: #64748b;">Click "Open in New Tab" to view the PDF</p>
             </div>
           `;
         }
-      }, 3000);
+      }, 4000);
     });
 
     // Auto-resize functionality
     function resizePDF() {
       const pdfEmbed = document.getElementById('pdfEmbed');
       const container = pdfEmbed.parentElement;
-      const containerWidth = container.offsetWidth - 60; // Account for padding
+      const containerWidth = container.offsetWidth - 80; // Account for padding
       pdfEmbed.style.width = containerWidth + 'px';
     }
 
