@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Product PDF</title>
+</head>
+<body>
+  <h2>View New Product PDF</h2>
+
+  <!-- Option 1: Open PDF inside the page -->
+  <embed src="NewProduct.pdf" type="application/pdf" width="100%" height="600px" />
+
+  <br><br>
+
+  <!-- Option 2: Download / open PDF in another tab -->
+  <a href="NewProduct.pdf" target="_blank">Open NewProduct.pdf</a>
+</body>
+</html>
