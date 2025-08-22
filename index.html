@@ -515,11 +515,13 @@
         </div>
 
         <div class="actions-bar">
-          <button onclick="toggleFullscreen()" class="action-btn primary-btn">
+          <button onclick="openInNewTab()" class="action-btn primary-btn">
+          </button>
+          <button onclick="toggleFullscreen()" class="action-btn">
             <span></span> Fullscreen
           </button>
           <button onclick="downloadPDF()" class="action-btn">
-            <span></span> Download PDF
+            <span>📥</span> Download PDF
           </button>
           <button onclick="printPDF()" class="action-btn">
             <span></span> Print
@@ -628,6 +630,83 @@
       }
     };
 
+    // Open in new tab function
+    const openInNewTab = () => {
+      // Create a new window/tab with the same PDF viewer
+      const newWindow = window.open('', '_blank', 'width=1200,height=800');
+      
+      // Write the complete HTML structure to the new tab
+      newWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>PDF Viewer - New Tab</title>
+          <style>
+            body {
+              margin: 0;
+              padding: 20px;
+              font-family: 'Inter', sans-serif;
+              background: #f8fafc;
+            }
+            .pdf-container {
+              max-width: 100%;
+              margin: 0 auto;
+              background: white;
+              border-radius: 12px;
+              overflow: hidden;
+              box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            }
+            .pdf-embed {
+              width: 100%;
+              height: 90vh;
+              border: none;
+            }
+            .header {
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              padding: 15px 25px;
+              font-weight: 600;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .close-btn {
+              background: rgba(255,255,255,0.2);
+              border: none;
+              color: white;
+              padding: 8px 15px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-size: 14px;
+              transition: all 0.2s ease;
+            }
+            .close-btn:hover {
+              background: rgba(255,255,255,0.3);
+            }
+          </style>
+        </head>
+        <body>
+          <div class="pdf-container">
+            <div class="header">
+              <span>📊 Product Showcase - PDF Viewer</span>
+              <button class="close-btn" onclick="window.close()">✕ Close</button>
+            </div>
+            <embed src="NewProduct.pdf" type="application/pdf" class="pdf-embed">
+          </div>
+        </body>
+        </html>
+      `);
+      
+      newWindow.document.close();
+    };
+
+    // Alternative: Simple PDF opening in new tab
+    const openPDFInNewTab = () => {
+      window.open('NewProduct.pdf', '_blank');
+    };
+
     // Download function
     const downloadPDF = () => {
       const link = document.createElement('a');
@@ -682,9 +761,58 @@
         });
     };
 
+    // Auto new-tab redirect (if opened from Odoo in same tab)
+    const handleOdooRedirect = () => {
+      // Check if this was opened from another domain (like Odoo)
+      const referrer = document.referrer;
+      const isFromOdoo = referrer && !referrer.includes('github.io');
+      const isDirectAccess = window.history.length === 1;
+      
+      if (isFromOdoo || (referrer && referrer.includes('odoo'))) {
+        // Open in new tab and show message
+        const newWindow = window.open(window.location.href, '_blank');
+        if (newWindow) {
+          // Show redirect message in current tab
+          document.body.innerHTML = `
+            <div style="
+              display: flex; 
+              justify-content: center; 
+              align-items: center; 
+              height: 100vh; 
+              background: #0f0f23;
+              font-family: Inter, sans-serif;
+              text-align: center;
+              color: white;
+            ">
+              <div>
+                <div style="font-size: 48px; margin-bottom: 20px;">🔄</div>
+                <h2 style="margin-bottom: 15px;">Opening in New Tab...</h2>
+                <p style="opacity: 0.8;">The PDF viewer has been opened in a new tab for better experience.</p>
+                <button onclick="window.close()" style="
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  color: white;
+                  border: none;
+                  padding: 12px 24px;
+                  border-radius: 8px;
+                  margin-top: 20px;
+                  cursor: pointer;
+                  font-size: 16px;
+                ">Close This Tab</button>
+              </div>
+            </div>
+          `;
+        }
+        return true; // Don't load PDF in this tab
+      }
+      return false; // Load PDF normally
+    };
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(loadPDF, 1000);
+      // Check for Odoo redirect first
+      if (!handleOdooRedirect()) {
+        setTimeout(loadPDF, 1000);
+      }
     });
 
     // Handle window resize
