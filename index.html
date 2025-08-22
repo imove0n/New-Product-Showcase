@@ -516,15 +516,16 @@
 
         <div class="actions-bar">
           <button onclick="openInNewTab()" class="action-btn primary-btn">
+            <span>🔗</span> Open in New Tab
           </button>
           <button onclick="toggleFullscreen()" class="action-btn">
-            <span></span> Fullscreen
+            <span>🔍</span> Fullscreen
           </button>
           <button onclick="downloadPDF()" class="action-btn">
             <span>📥</span> Download PDF
           </button>
           <button onclick="printPDF()" class="action-btn">
-            <span></span> Print
+            <span>🖨️</span> Print
           </button>
         </div>
       </div>
@@ -761,58 +762,9 @@
         });
     };
 
-    // Auto new-tab redirect (if opened from Odoo in same tab)
-    const handleOdooRedirect = () => {
-      // Check if this was opened from another domain (like Odoo)
-      const referrer = document.referrer;
-      const isFromOdoo = referrer && !referrer.includes('github.io');
-      const isDirectAccess = window.history.length === 1;
-      
-      if (isFromOdoo || (referrer && referrer.includes('odoo'))) {
-        // Open in new tab and show message
-        const newWindow = window.open(window.location.href, '_blank');
-        if (newWindow) {
-          // Show redirect message in current tab
-          document.body.innerHTML = `
-            <div style="
-              display: flex; 
-              justify-content: center; 
-              align-items: center; 
-              height: 100vh; 
-              background: #0f0f23;
-              font-family: Inter, sans-serif;
-              text-align: center;
-              color: white;
-            ">
-              <div>
-                <div style="font-size: 48px; margin-bottom: 20px;">🔄</div>
-                <h2 style="margin-bottom: 15px;">Opening in New Tab...</h2>
-                <p style="opacity: 0.8;">The PDF viewer has been opened in a new tab for better experience.</p>
-                <button onclick="window.close()" style="
-                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                  color: white;
-                  border: none;
-                  padding: 12px 24px;
-                  border-radius: 8px;
-                  margin-top: 20px;
-                  cursor: pointer;
-                  font-size: 16px;
-                ">Close This Tab</button>
-              </div>
-            </div>
-          `;
-        }
-        return true; // Don't load PDF in this tab
-      }
-      return false; // Load PDF normally
-    };
-
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-      // Check for Odoo redirect first
-      if (!handleOdooRedirect()) {
-        setTimeout(loadPDF, 1000);
-      }
+      setTimeout(loadPDF, 1000);
     });
 
     // Handle window resize
