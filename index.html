@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Product PDF</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
     * {
       margin: 0;
       padding: 0;
@@ -12,375 +14,214 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0c0a09 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f23;
+      background-image: 
+        radial-gradient(circle at 25% 25%, #1e1e3f 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, #2a2a5a 0%, transparent 50%),
+        linear-gradient(135deg, #0f0f23 0%, #1a1a3a 100%);
       min-height: 100vh;
-      padding: 20px;
+      padding: 0;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* Animated background elements */
-    body::before {
-      content: '';
+    /* Elegant floating particles */
+    .particles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(12, 10, 9, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 60% 60%, rgba(14, 165, 233, 0.2) 0%, transparent 60%);
-      z-index: -1;
-      animation: backgroundFloat 25s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+    }
+
+    .particle:nth-child(1) { width: 3px; height: 3px; left: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 2px; height: 2px; left: 40%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 4px; height: 4px; left: 60%; animation-delay: 4s; }
+    .particle:nth-child(4) { width: 2px; height: 2px; left: 80%; animation-delay: 6s; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 10;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Premium header with glass effect */
+    .premium-header {
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0;
+      position: sticky;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        linear-gradient(45deg, transparent 40%, rgba(14, 165, 233, 0.1) 50%, transparent 60%),
-        linear-gradient(-45deg, transparent 40%, rgba(12, 10, 9, 0.1) 50%, transparent 60%);
-      z-index: -1;
-      animation: backgroundShift 30s ease-in-out infinite reverse;
+      z-index: 100;
     }
 
-    @keyframes backgroundFloat {
-      0%, 100% { 
-        transform: translateY(0px) rotate(0deg) scale(1); 
-        opacity: 0.8;
-      }
-      33% { 
-        transform: translateY(-30px) rotate(120deg) scale(1.1); 
-        opacity: 1;
-      }
-      66% { 
-        transform: translateY(-10px) rotate(240deg) scale(0.9); 
-        opacity: 0.9;
-      }
-    }
-
-    @keyframes backgroundShift {
-      0%, 100% { transform: translateX(0px) translateY(0px); }
-      25% { transform: translateX(20px) translateY(-10px); }
-      50% { transform: translateX(-15px) translateY(15px); }
-      75% { transform: translateX(10px) translateY(-20px); }
-    }
-
-    .container {
+    .header-content {
       max-width: 1200px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 25px;
-      box-shadow: 
-        0 25px 80px rgba(14, 165, 233, 0.2),
-        0 10px 30px rgba(12, 10, 9, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(15px);
-      border: 2px solid rgba(14, 165, 233, 0.2);
-      overflow: hidden;
-      animation: slideIn 1s ease-out;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .brand-logo:hover {
+      transform: translateY(-2px);
+    }
+
+    .logo-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    }
+
+    .brand-text {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Main content area */
+    .content-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 40px 40px;
       position: relative;
     }
 
-    .container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #0ea5e9, #0284c7, #0c0a09, #0ea5e9);
-      background-size: 200% 100%;
-      animation: borderGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes borderGlow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(50px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .header {
-      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0c0a09 100%);
-      padding: 40px;
+    /* Hero section */
+    .hero-section {
       text-align: center;
-      color: white;
+      margin-bottom: 60px;
+    }
+
+    .hero-title {
+      color: #ffffff;
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 20px;
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Premium PDF viewer container */
+    .viewer-container {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
     }
 
-    .header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      animation: shimmer 4s infinite;
-    }
-
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-      animation: underlineGlow 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    @keyframes underlineGlow {
-      from { opacity: 0.3; }
-      to { opacity: 1; }
-    }
-
-    .header h2 {
-      font-size: 3em;
-      font-weight: 300;
-      margin: 0;
-      text-shadow: 
-        0 2px 10px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(14, 165, 233, 0.5);
-      position: relative;
-      z-index: 1;
-      letter-spacing: 2px;
-    }
-
-    .pdf-container {
-      padding: 40px;
-      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
-      position: relative;
-    }
-
-    .pdf-container::before {
+    .viewer-container::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(circle at top left, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at bottom right, rgba(12, 10, 9, 0.05) 0%, transparent 50%);
-      pointer-events: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    .pdf-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+      background: #ffffff;
     }
 
     .pdf-embed {
       width: 100%;
-      height: 80vh;
+      height: 85vh;
       border: none;
-      border-radius: 20px;
-      box-shadow: 
-        0 15px 35px rgba(14, 165, 233, 0.15),
-        0 5px 15px rgba(12, 10, 9, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
       background: white;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.3s ease;
       position: relative;
       z-index: 1;
     }
 
-    .pdf-embed:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 
-        0 25px 50px rgba(14, 165, 233, 0.25),
-        0 10px 25px rgba(12, 10, 9, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
-
-    .actions {
-      padding: 30px 40px 40px;
-      text-align: center;
-      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .download-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0c0a09 100%);
-      color: white;
-      text-decoration: none;
-      padding: 18px 35px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1em;
-      box-shadow: 
-        0 10px 30px rgba(14, 165, 233, 0.3),
-        0 3px 10px rgba(12, 10, 9, 0.2);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 1px;
-      min-width: 180px;
-    }
-
-    .download-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .download-btn::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
-    }
-
-    .download-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 
-        0 15px 40px rgba(14, 165, 233, 0.4),
-        0 5px 15px rgba(12, 10, 9, 0.3);
-    }
-
-    .download-btn:hover::before {
-      left: 100%;
-    }
-
-    .download-btn:hover::after {
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-    }
-
-    .download-btn:active {
-      transform: translateY(-1px) scale(1.02);
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-      
-      .header {
-        padding: 30px;
-      }
-      
-      .header h2 {
-        font-size: 2.2em;
-      }
-      
-      .pdf-container {
-        padding: 25px;
-      }
-      
-      .pdf-embed {
-        height: 70vh;
-      }
-      
-      .actions {
-        padding: 25px;
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .download-btn {
-        padding: 15px 30px;
-        font-size: 1em;
-        min-width: 160px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header h2 {
-        font-size: 1.8em;
-        letter-spacing: 1px;
-      }
-      
-      .pdf-embed {
-        height: 60vh;
-      }
-
-      .download-btn {
-        min-width: 140px;
-      }
-    }
-
-    /* Loading animation for PDF */
-    .pdf-loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-      background: linear-gradient(145deg, #ffffff, #f1f5f9);
-      border-radius: 20px;
-      flex-direction: column;
-      gap: 25px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pdf-loading::before {
-      content: '';
+    /* Loading state */
+    .loading-overlay {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: 
-        radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
-      animation: loadingPulse 2s ease-in-out infinite;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      z-index: 2;
     }
 
-    @keyframes loadingPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.7; }
-    }
-
-    .loading-spinner {
+    .loading-animation {
       width: 60px;
       height: 60px;
-      border: 5px solid #f1f5f9;
-      border-top: 5px solid #0ea5e9;
-      border-right: 5px solid #0284c7;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
       border-radius: 50%;
-      animation: spin 1.2s linear infinite;
-      position: relative;
-      z-index: 1;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
     }
 
     @keyframes spin {
@@ -389,90 +230,271 @@
     }
 
     .loading-text {
-      color: #0c0a09;
-      font-size: 1.2em;
-      font-weight: 600;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    /* Action buttons */
+    .actions-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      letter-spacing: 0.3px;
       position: relative;
-      z-index: 1;
-      text-shadow: 0 1px 3px rgba(14, 165, 233, 0.2);
+      overflow: hidden;
+    }
+
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-btn:hover::before {
+      left: 100%;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+    }
+
+    .primary-btn:hover {
+      background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .content-wrapper {
+        padding: 40px 20px 20px;
+      }
+      
+      .hero-title {
+        font-size: 36px;
+      }
+      
+      .hero-subtitle {
+        font-size: 18px;
+      }
+      
+      .viewer-container {
+        padding: 20px;
+      }
+      
+      .pdf-embed {
+        height: 70vh;
+      }
+      
+      .actions-bar {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .action-btn {
+        min-width: 200px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 28px;
+      }
+      
+      .brand-text {
+        font-size: 20px;
+      }
+      
+      .pdf-embed {
+        height: 60vh;
+      }
+    }
+
+    /* Smooth reveal animation */
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Success state */
+    .loaded {
+      animation: zoomIn 0.5s ease-out;
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <a href="#" onclick="window.open(window.location.href, '_blank'); return false;" style="text-decoration: none; color: inherit;">
-        <h2 style="cursor: pointer;">New Product Showcase</h2>
-      </a>
-    </div>
-    
-    <div class="pdf-container">
-      <div id="loadingIndicator" class="pdf-loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading PDF...</div>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="main-container">
+    <header class="premium-header">
+      <div class="header-content">
+        <a href="#" onclick="window.open(window.location.href, '_blank'); return false;" class="brand-logo" style="text-decoration: none;">
+          <div class="logo-icon">📊</div>
+          <div class="brand-text">Product Showcase</div>
+        </a>
       </div>
-      <embed id="pdfEmbed" src="NewProduct.pdf" type="application/pdf" class="pdf-embed" style="display: none;" />
-    </div>
-    
-    <div class="actions">
-      <button onclick="fullscreenPDF()" class="download-btn">
-        Fullscreen View
-      </button>
+    </header>
+
+    <div class="content-wrapper">
+      <section class="hero-section fade-in">
+        <h1 class="hero-title">New Product Launch</h1>
+        <p class="hero-subtitle">Experience our latest innovation through an immersive digital presentation</p>
+      </section>
+
+      <div class="viewer-container fade-in">
+        <div class="pdf-frame">
+          <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-animation"></div>
+            <div class="loading-text">Preparing presentation...</div>
+          </div>
+          <embed id="pdfEmbed" src="NewProduct.pdf" type="application/pdf" class="pdf-embed" style="opacity: 0;" />
+        </div>
+
+        <div class="actions-bar">
+          <button onclick="fullscreenPDF()" class="action-btn primary-btn">
+            <span>🔍</span> Fullscreen Experience
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // Handle PDF loading
+    // Handle PDF loading with premium experience
     document.addEventListener('DOMContentLoaded', function() {
       const pdfEmbed = document.getElementById('pdfEmbed');
-      const loadingIndicator = document.getElementById('loadingIndicator');
+      const loadingOverlay = document.getElementById('loadingOverlay');
       
-      // Simulate loading time and show PDF
+      // Enhanced loading sequence
       setTimeout(() => {
-        loadingIndicator.style.display = 'none';
-        pdfEmbed.style.display = 'block';
-        pdfEmbed.style.animation = 'slideIn 0.6s ease-out';
-      }, 1800);
+        loadingOverlay.style.opacity = '0';
+        loadingOverlay.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+          pdfEmbed.style.opacity = '1';
+          pdfEmbed.style.transition = 'opacity 0.5s ease';
+          pdfEmbed.classList.add('loaded');
+          
+          // Auto-fullscreen after elegant reveal
+          setTimeout(() => {
+            autoFullscreen();
+          }, 800);
+        }, 500);
+      }, 2000);
 
       // Handle PDF load event
       pdfEmbed.addEventListener('load', function() {
-        loadingIndicator.style.display = 'none';
-        pdfEmbed.style.display = 'block';
+        loadingOverlay.style.opacity = '0';
+        loadingOverlay.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+          pdfEmbed.style.opacity = '1';
+          pdfEmbed.style.transition = 'opacity 0.5s ease';
+          pdfEmbed.classList.add('loaded');
+          
+          setTimeout(() => {
+            autoFullscreen();
+          }, 600);
+        }, 500);
       });
 
-      // Fallback if PDF doesn't load
+      // Elegant fallback
       setTimeout(() => {
-        if (pdfEmbed.style.display === 'none') {
-          loadingIndicator.innerHTML = `
-            <div style="text-align: center; color: #0c0a09; z-index: 2; position: relative;">
-              <h3 style="margin-bottom: 10px; color: #0ea5e9;">PDF Preview Not Available</h3>
-              <p style="color: #64748b;">Click "Open in New Tab" to view the PDF</p>
+        if (loadingOverlay.style.display !== 'none') {
+          loadingOverlay.innerHTML = `
+            <div style="text-align: center; color: white; max-width: 300px;">
+              <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
+              <h3 style="margin-bottom: 12px; font-weight: 600;">Document Ready</h3>
+              <p style="opacity: 0.8; font-size: 14px; line-height: 1.5;">Click "Fullscreen Experience" below to view the complete presentation</p>
             </div>
           `;
         }
-      }, 4000);
+      }, 4500);
     });
 
-    // Auto-resize functionality
-    function resizePDF() {
+    // Premium auto-fullscreen function
+    function autoFullscreen() {
       const pdfEmbed = document.getElementById('pdfEmbed');
-      const container = pdfEmbed.parentElement;
-      const containerWidth = container.offsetWidth - 80; // Account for padding
-      pdfEmbed.style.width = containerWidth + 'px';
-    }
-
-    // Print PDF function
-    function printPDF() {
-      const pdfEmbed = document.getElementById('pdfEmbed');
-      if (pdfEmbed.contentWindow) {
-        pdfEmbed.contentWindow.print();
-      } else {
-        // Fallback: try to print the whole page
-        window.print();
+      
+      if (pdfEmbed && pdfEmbed.style.opacity === '1') {
+        if (pdfEmbed.requestFullscreen) {
+          pdfEmbed.requestFullscreen().catch(err => {
+            console.log('Fullscreen blocked by browser policy');
+          });
+        } else if (pdfEmbed.webkitRequestFullscreen) {
+          pdfEmbed.webkitRequestFullscreen();
+        } else if (pdfEmbed.msRequestFullscreen) {
+          pdfEmbed.msRequestFullscreen();
+        } else if (pdfEmbed.mozRequestFullScreen) {
+          pdfEmbed.mozRequestFullScreen();
+        }
       }
     }
 
-    // Fullscreen PDF function
+    // Manual fullscreen function
     function fullscreenPDF() {
       const pdfEmbed = document.getElementById('pdfEmbed');
       if (pdfEmbed.requestFullscreen) {
@@ -481,12 +503,25 @@
         pdfEmbed.webkitRequestFullscreen();
       } else if (pdfEmbed.msRequestFullscreen) {
         pdfEmbed.msRequestFullscreen();
+      } else if (pdfEmbed.mozRequestFullScreen) {
+        pdfEmbed.mozRequestFullScreen();
       }
     }
 
-    // Resize on window resize
+    // Auto-resize functionality
+    function resizePDF() {
+      const pdfEmbed = document.getElementById('pdfEmbed');
+      const container = pdfEmbed.parentElement;
+      const containerWidth = container.offsetWidth;
+      pdfEmbed.style.width = containerWidth + 'px';
+    }
+
+    // Resize handlers
     window.addEventListener('resize', resizePDF);
     window.addEventListener('load', resizePDF);
+
+    // Add smooth scrolling for better UX
+    document.documentElement.style.scrollBehavior = 'smooth';
   </script>
 </body>
 </html>
